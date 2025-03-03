@@ -1,12 +1,10 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
 from pathlib import Path
 
 
-@dataclass
 class AfterEffectsFile(ABC):
-    input_txt: Path
-    output_midi: Path
+    def __init__(self, input_txt: Path):
+        self.input_txt: Path = input_txt
 
     def get_framerate(self) -> int:
         """Reads the input .txt file and returns the framerate."""
@@ -24,5 +22,10 @@ class AfterEffectsFile(ABC):
                 raise error
             return framerate
 
+    # TODO:
+    # def output_midi(self) -> Path:
+    #     """Exports a MIDI file of the data."""
+
     @abstractmethod
-    def get_data(self) -> tuple[object, ...]: ...
+    def get_data(self) -> tuple[object, ...]:
+        """Returns a tuple of orientation.Data or position.Data objects."""
