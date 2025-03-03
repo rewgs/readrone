@@ -7,8 +7,7 @@
 import argparse
 from pathlib import Path
 
-from orientation import Orientation
-from position import Position
+from aftereffects import AfterEffectsData
 
 # import numpy as np
 
@@ -33,20 +32,20 @@ def main():
 
     args = parser.parse_args()
 
-    o_path = Path(args.orientation).resolve(strict=True)
-    p_path = Path(args.position).resolve(strict=True)
+    o = Path(args.orientation).resolve(strict=True)
+    p = Path(args.position).resolve(strict=True)
 
-    if o_path.suffix != ".txt":
-        raise Exception(f"{o_path.as_posix()} is not a .txt file!")
+    if o.suffix != ".txt":
+        raise Exception(f"{o.as_posix()} is not a .txt file!")
 
-    if p_path.suffix != ".txt":
-        raise Exception(f"{o_path.as_posix()} is not a .txt file!")
+    if p.suffix != ".txt":
+        raise Exception(f"{o.as_posix()} is not a .txt file!")
 
-    o = Orientation(o_path)
-    p = Position(p_path)
+    orientation = AfterEffectsData(o)
+    position = AfterEffectsData(p)
 
-    # print(o.input_txt.as_posix())
-    # print(p.input_txt.as_posix())
+    print(orientation)
+    print(position)
 
 
 if __name__ == "__main__":
