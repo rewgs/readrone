@@ -45,8 +45,8 @@ def main():
     o = Orientation(o_path)
     p = Position(p_path)
 
-    print(o.input_txt.as_posix())
-    print(p.input_txt.as_posix())
+    # print(o.input_txt.as_posix())
+    # print(p.input_txt.as_posix())
 
 
 if __name__ == "__main__":
