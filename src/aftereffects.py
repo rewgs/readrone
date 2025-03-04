@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import override
 
+import numpy as np
+
 
 @dataclass
 class FrameData:
@@ -19,12 +21,7 @@ class AfterEffectsData:
     def get_framerate(self) -> int:
         """Reads the input .txt file and returns the framerate."""
         with open(self.txt, "r") as f:
-            try:
-                line: list[str] = f.readline(2).strip().split()
-            # TODO: What errors would this potentially raise?
-            except Exception as error:
-                raise error
-
+            line = f.readlines()[2].strip().split()
             try:
                 framerate: int = int(line[3])
             # TODO: What errors would this potentially raise?
@@ -61,6 +58,13 @@ class AfterEffectsData:
                     data.append(d)
 
         return tuple(data)
+
+    def get_degrees(self):
+        frames = self.get_frames()
+        x = np.degrees(np.unwrap(np.radians([frame.x for frame in frames])))
+        y = np.degrees(np.unwrap(np.radians([frame.y for frame in frames])))
+        z = np.degrees(np.unwrap(np.radians([frame.z for frame in frames])))
+        return x, y, z
 
     @override
     def __str__(self) -> str:

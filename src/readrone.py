@@ -1,6 +1,4 @@
 # 1. CLI args:
-# - orientation input txt file
-# - position input txt file
 # - framerate
 
 
@@ -12,40 +10,47 @@ from aftereffects import AfterEffectsData
 # import numpy as np
 
 
+def __check_path(p: str) -> Path:
+    path = Path(p)
+    if path.suffix != ".txt":
+        raise Exception(f"{p} is not a .txt file!")
+    try:
+        resolved = path.resolve(strict=True)
+    except FileNotFoundError as error:
+        raise error
+    else:
+        return resolved
+
+
 def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
         "-o",
-        "--orientation",
+        "--orientation-file",
         help=".txt file from Adobe After Effects containing orientation data",
         type=str,
         required=True,
+        dest="orientation",
     )
     parser.add_argument(
         "-p",
-        "--position",
+        "--position-file",
         help=".txt file from Adobe After Effects containing postion data",
         type=str,
         required=True,
+        dest="position",
     )
 
     args = parser.parse_args()
 
-    o = Path(args.orientation).resolve(strict=True)
-    p = Path(args.position).resolve(strict=True)
+    o = AfterEffectsData(__check_path(args.orientation))
+    p = AfterEffectsData(__check_path(args.position))
 
-    if o.suffix != ".txt":
-        raise Exception(f"{o.as_posix()} is not a .txt file!")
-
-    if p.suffix != ".txt":
-        raise Exception(f"{o.as_posix()} is not a .txt file!")
-
-    orientation = AfterEffectsData(o)
-    position = AfterEffectsData(p)
-
-    print(orientation)
-    print(position)
+    # print(o)
+    # print(p)
+    print(o.get_framerate())
+    print(p.get_framerate())
 
 
 if __name__ == "__main__":
