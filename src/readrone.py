@@ -5,7 +5,7 @@
 import argparse
 from pathlib import Path
 
-from aftereffects import AfterEffectsData
+from afx import AfterEffectsData
 
 # import numpy as np
 
@@ -47,10 +47,12 @@ def main():
     o = AfterEffectsData(__check_path(args.orientation))
     p = AfterEffectsData(__check_path(args.position))
 
+    # print(o.__repr__())
+    # print(p.__repr__())
     # print(o)
     # print(p)
-    print(o.get_framerate())
-    print(p.get_framerate())
+    # print(o.get_framerate())
+    # print(p.get_framerate())
 
 
 if __name__ == "__main__":

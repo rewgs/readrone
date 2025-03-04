@@ -30,6 +30,7 @@ class AfterEffectsData:
             return framerate
 
     def get_frames(self) -> tuple[FrameData, ...]:
+        """For each frame, returns a FrameData object."""
         data: list[FrameData] = []
 
         with open(self.txt, "r") as f:
@@ -65,6 +66,10 @@ class AfterEffectsData:
         y = np.degrees(np.unwrap(np.radians([frame.y for frame in frames])))
         z = np.degrees(np.unwrap(np.radians([frame.z for frame in frames])))
         return x, y, z
+
+    @override
+    def __repr__(self) -> str:
+        return f"AfterEffectsData(txt={self.txt})"
 
     @override
     def __str__(self) -> str:
